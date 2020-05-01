@@ -23,7 +23,7 @@ public class Person {
 	private Long id;
 	//private boolean active;
 	
-//	private boolean initialized = false;
+	private boolean initialized = false;
 	//Name information
 	private String firstName;
 	private String middleName;
@@ -212,7 +212,7 @@ public class Person {
 				+ "Email : " + email);
 	}
 	*/
-	/*
+	
 	private String getChildrenInfo() {
 		String retString = "";
 		Iterator<Person> it = children.iterator();
@@ -238,13 +238,13 @@ public class Person {
 		}
 		retString += 
 				getFirstName() + " " + getMiddleName() + " " + getLastName() + "\n"
-				+ "lived " + birthdate + " to " + deathdate + "\n"
-				+ age + " years old " + "and lives at \n"
-				+ getAddressInfo() + "\n"
-				+ getContactInfo() + "\n"
+				//+ "lived " + birthdate + " to " + deathdate + "\n"
+				//+ age + " years old " + "and lives at \n"
+				//+ getAddressInfo() + "\n"
+				//+ getContactInfo() + "\n"
 				+ "Children : \n" 
 				+ getChildrenInfo();
 		return retString;
 	}
-	*/
+	
 }

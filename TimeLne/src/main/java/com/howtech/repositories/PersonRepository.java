@@ -13,5 +13,7 @@ public interface PersonRepository extends PagingAndSortingRepository<Person, Lon
 **/
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
+
+	Person findByFirstName();
 	
 }
