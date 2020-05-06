@@ -17,7 +17,6 @@ import com.howtech.service.UserService;
 @SpringBootApplication
 public class AuthenticationApplication implements CommandLineRunner {
 
-	@Autowired
 	private UserService userService;
 	
 	@Autowired

@@ -1,6 +1,5 @@
 package com.howtech.models;
 
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,14 +13,13 @@ import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.Set;
 
-
 @NodeEntity(label="FamilyMember")
-public class Person {
+public class Person implements Comparable<Person>{
 	//Id in the database
 	@Id
 	@GeneratedValue
 	private Long id;
-	//private boolean active;
+	private boolean active;
 	
 	private boolean initialized = false;
 	//Name information
@@ -30,16 +28,16 @@ public class Person {
 	private String lastName;
 	
 	//Birth and death dates
-	//private Date birthdate;
-	//private Date deathdate = null;
-	//private int age;
-	//private String gender;
+	private Date birthdate;
+	private Date deathdate = null;
+	private int age;
+	private String gender;
 	
 	
 	//Mother and Father person objects everyone has at least theses two
-	@Relationship(type = "MOTHER", direction = Relationship.INCOMING)
+	@Relationship(type = "MOTHER", direction = Relationship.OUTGOING)
 	private Person mother;
-	@Relationship(type = "FATHER", direction = Relationship.INCOMING)
+	@Relationship(type = "FATHER", direction = Relationship.OUTGOING)
 	private Person father;
 	
 	//list of children
@@ -47,7 +45,7 @@ public class Person {
 	private Set<Person> children;
 	
 	//Address information
-	/*
+	
 	private String country;
 	
 	private String state;
@@ -65,7 +63,6 @@ public class Person {
 	private String phoneNumber;
 	
 	private String email;
-	*/
 	
 	public Person() {
 		mother = null;
@@ -80,10 +77,10 @@ public class Person {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	/*
+	
 	public boolean isActive() {
 		return active;
-	}*/
+	}
 	public void setMother(Person mother) {
 		this.mother = mother;
 	}
@@ -106,11 +103,11 @@ public class Person {
 	public Set<Person> getChildren() {
 		return (HashSet<Person>) children;
 	}
-	/*
+	
 	//Setters and getters for personal information
 	public void setBirthdate(int year, int month, int day) {
 		Calendar cal = Calendar.getInstance();
-		cal.set(year,  day, month);
+		cal.set(year, day, month);
 		birthdate = cal.getTime();
 	}
 	public Date getBirthdate() {
@@ -122,7 +119,7 @@ public class Person {
 		cal.set(year, day, month);
 		deathdate = cal.getTime();
 	}
-	*/
+	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -141,7 +138,7 @@ public class Person {
 	public String getLastName() {
 		return lastName;
 	}
-	/*
+	
 	private String getAddressInfo() {
 		return (streetNumber + street + aptNumber + "\n"
 				+ country + "\n"
@@ -211,7 +208,7 @@ public class Person {
 		return ("Phone : " + phoneNumber + "\n"
 				+ "Email : " + email);
 	}
-	*/
+	
 	
 	private String getChildrenInfo() {
 		String retString = "";
@@ -221,6 +218,12 @@ public class Person {
 			retString += it.next().toString(); //if it is being printed as a child don't print parents
 		}
 			return retString;
+	}
+	
+	@Override
+	public int compareTo(Person arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	@Override 
@@ -238,13 +241,12 @@ public class Person {
 		}
 		retString += 
 				getFirstName() + " " + getMiddleName() + " " + getLastName() + "\n"
-				//+ "lived " + birthdate + " to " + deathdate + "\n"
-				//+ age + " years old " + "and lives at \n"
-				//+ getAddressInfo() + "\n"
-				//+ getContactInfo() + "\n"
+				+ "lived " + birthdate + " to " + deathdate + "\n"
+				+ age + " years old " + "and lives at \n"
+				+ getAddressInfo() + "\n"
+				+ getContactInfo() + "\n"
 				+ "Children : \n" 
 				+ getChildrenInfo();
 		return retString;
 	}
-	
 }

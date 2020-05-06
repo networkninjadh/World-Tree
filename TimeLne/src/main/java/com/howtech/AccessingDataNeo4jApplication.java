@@ -26,15 +26,27 @@ public class AccessingDataNeo4jApplication implements CommandLineRunner{
 @Override
 public void run(String... args) throws Exception {
 	Person me = new Person();
-	me.setFirstName("damond");
+	me.setFirstName("damond_test");
 	me.setMiddleName("dontrail");
 	me.setLastName("howard");
+	Person childsMother = new Person();
+	childsMother.setFirstName("Mom");
+	childsMother.setMiddleName("middlename");
+	childsMother.setLastName("lastname");
+	
+	Person child = new Person();
+	child.setMother(childsMother);
+	child.setFirstName("baaby");
+	child.setMiddleName("middle");
+	child.setLastName("last");
+	childsMother.setChild(child);
+	me.setChild(child);
 	Person mom = new Person();
-	mom.setFirstName("Ella");
+	mom.setFirstName("Ella_test");
 	mom.setMiddleName("mae");
 	mom.setLastName("howard");
 	Person dad = new Person();
-	dad.setFirstName("paul");
+	dad.setFirstName("paul_test");
 	dad.setMiddleName("montrelle");
 	dad.setLastName("Drake");
 	me.setFather(dad);

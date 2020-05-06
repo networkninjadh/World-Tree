@@ -3,14 +3,24 @@ package com.howtech.models;
 
 import java.util.Set;
 
+import org.neo4j.ogm.annotation.GeneratedValue;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
 
-public class FamilyTree {
+@NodeEntity(label = "FamilyTree")
+public class FamilyTree implements Comparable<FamilyTree>{
 	
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@Id
+	@GeneratedValue 
+	private Long id;
 	
+	//mostly everything can be done with the root node
 	private Person root;
+	
+	//Used internally
+	private Person head;
+	private Person tail;
+	
 	int size;
 	
 	String data;
@@ -40,10 +50,10 @@ public class FamilyTree {
 			System.out.println("Cannot add mother to empty tree");
 		}
 	}
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public Person getRoot() {
@@ -89,7 +99,13 @@ public class FamilyTree {
 	}
 	
 	@Override
+	public int compareTo(FamilyTree o) {
+		// TODO Auto-generated method stub
+		return 0;
+	} 
+	
+	@Override
 	public String toString() { //Person should only print a person this method should handle printing all elements in the tree
 		return root.toString();
-	} 
+	}
 }

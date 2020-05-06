@@ -30,9 +30,6 @@ public class UserService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
 	
 	
 	public String signin(String username, String password) {
