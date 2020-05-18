@@ -44,11 +44,11 @@ public class FamilyTree implements Comparable<FamilyTree>{
 			return true;
 	}
 	public void setMother(Person mother) {
-		if(this.root != null) {
-			this.root.setMother(mother);
-		}else {
-			System.out.println("Cannot add mother to empty tree");
-		}
+	//	if(this.root != null) {
+	//	this.root.setMother(mother);
+	//	}else {
+	//		System.out.println("Cannot add mother to empty tree");
+	//	}
 	}
 	public Long getId() {
 		return id;
@@ -79,7 +79,7 @@ public class FamilyTree implements Comparable<FamilyTree>{
 	}
 	public void setFather(Person father) {
 		if(this.root != null) {
-			this.root.setFather(father);
+			//this.root.setFather(father);
 		}else {
 			System.out.println("Cannot add a father to an empty tree");
 		}
@@ -89,7 +89,7 @@ public class FamilyTree implements Comparable<FamilyTree>{
 	}
 	//sets the next child to the person 
 	public void setChild(Person child) {
-		root.setChild(child);
+		//root.setChild(child);
 	}
 	public Person getChild(int i) {
 		return root.getChild(i);

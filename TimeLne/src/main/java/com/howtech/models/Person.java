@@ -12,6 +12,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.Set;
+import java.util.Stack;
 
 @NodeEntity(label="FamilyMember")
 public class Person implements Comparable<Person>{
@@ -31,17 +32,17 @@ public class Person implements Comparable<Person>{
 	private Date birthdate;
 	private Date deathdate = null;
 	private int age;
-	private String gender;
+	private Gender gender;
 	
 	
 	//Mother and Father person objects everyone has at least theses two
-	@Relationship(type = "MOTHER", direction = Relationship.INCOMING)
+	@Relationship(type = "MOTHER", direction = Relationship.OUTGOING)
 	private Person mother;
-	@Relationship(type = "FATHER", direction = Relationship.INCOMING)
+	@Relationship(type = "FATHER", direction = Relationship.OUTGOING)
 	private Person father;
 	
 	//list of children
-	@Relationship(type = "CHILDREN", direction = Relationship.OUTGOING)
+	@Relationship(type = "CHILD", direction = Relationship.OUTGOING)
 	private Set<Person> children;
 	
 	//Address information
@@ -63,11 +64,17 @@ public class Person implements Comparable<Person>{
 	private String phoneNumber;
 	
 	private String email;
-	
-	public Person(String firstName, String middleName, String lastName) {
+	public Person(String lastName) {
+		this.lastName = lastName;
+		mother = null;
+		father = null;
+		children = new HashSet<>();
+	}
+	public Person(String firstName, String middleName, String lastName, Gender gender) {
 		this.middleName = middleName;
 		this.lastName = lastName;
 		this.firstName = firstName;
+		this.gender = gender;
 		mother = null;
 		father = null;
 		children = new HashSet<>();
@@ -89,21 +96,63 @@ public class Person implements Comparable<Person>{
 	public boolean isActive() {
 		return active;
 	}
+	
 	public void setMother(Person mother) {
 		this.mother = mother;
+		mother.children.add(this);
+	}
+	public void setMother(Person mother, Stack<Person> stack) {
+		if (!stack.contains(this)) {
+			stack.add(this);
+			this.mother = mother;
+			mother.setChild(this, stack);
+		}
 	}
 	public Person getMother() {
 		return mother;
 	}
+	
 	public void setFather(Person father) {
 		this.father = father;
+		father.children.add(this);
+	}
+	public void setFather(Person father, Stack<Person> stack) {
+		if (!stack.contains(this)) {
+			stack.add(this);
+			this.father = father;
+			father.setChild(this, stack);
+		}
 	}
 	public Person getFather() {
 		return father;
 	}
+	
 	public void setChild(Person child) {
-		children.add(child);
+		this.children.add(child);
+		if (this.gender == Gender.MALE) {
+			child.father = this;
+		}else if (this.gender == Gender.FEMALE) {
+			child.mother = this;
+		}
 	}
+	
+	public void setChild(Person child, Stack<Person> stack) {
+		if (this.gender == Gender.MALE) {
+			if (!stack.contains(this)) {
+				stack.add(this);
+				children.add(child);
+				child.setFather(this, stack);
+			}
+			
+		}else if (this.gender == Gender.FEMALE) {
+			if (!stack.contains(this)) {
+				stack.add(this);
+				children.add(child);
+				child.setMother(this, stack);
+			}
+		}
+	}
+
 	public Person getChild(int i) {
 		Object[] array = children.toArray();
 		return (Person) array[i];
@@ -229,15 +278,19 @@ public class Person implements Comparable<Person>{
 	}
 	
 	@Override
-	public int compareTo(Person arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Person person) {
+		if (person.getId() == this.getId()) {
+			return 0;
+		}else if (person.getId() < this.getId()) {
+			return -1;
+		}else {
+			return 1;
+		}
 	}
 	
 	@Override 
 	public String toString() {
 		String retString = "";
-		
 		if (mother == null && father != null) {
 			retString = "Father : " + father.toString() + "Mother : Unknown\n";
 		}else if (mother == null && father == null) {

@@ -1,5 +1,7 @@
    package com.howtech;
 
+import java.util.Stack;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +11,7 @@ import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.howtech.models.FamilyTree;
+import com.howtech.models.Gender;
 import com.howtech.models.Person;
 import com.howtech.repositories.FamilyTreeRepository;
 import com.howtech.repositories.PersonRepository;
@@ -31,48 +34,96 @@ public class AccessingDataNeo4jApplication implements CommandLineRunner{
 
 @Override
 public void run(String... args) throws Exception {
+	Stack<Person> familyMembers = new Stack<Person>();
+	/**
 	Person me = new Person();
-	Person uncle  = new Person("Uncle", "Uncle", "Uncle");
+	Person uncle  = new Person("Uncle", "Uncle", "Uncle", Gender.MALE);
 
 	//create grandfather1
-	Person grandFather = new Person("grand-father-1", "Dads", "Grand Father 1");
-	grandFather.setChild(new Person("Uncle", "OR", "Aunt"));
-	grandFather.setChild(uncle);
+	Person grandFather = new Person("grand-father-1", "Dads", "Grand Father 1", Gender.MALE);
+	grandFather.setChild(new Person("Uncle", "OR", "Aunt", Gender.FEMALE), familyMembers);
+	grandFather.setChild(uncle, familyMembers);
 	//create grandmother1
-	Person grandMother = new Person("grand-mother-1", "Dads", "Grand Mother 1");
-	grandMother.setChild(uncle);
+	Person grandMother = new Person("grand-mother-1", "Dads", "Grand Mother 1", Gender.FEMALE);
+	grandMother.setChild(uncle, familyMembers);
 	//create grandmother2
-	Person grandMother2 = new Person("grand-mother-2", "Mothers", "Grand Mother 2");
+	Person grandMother2 = new Person("grand-mother-2", "Mothers", "Grand Mother 2", Gender.FEMALE);
 	//create grandfather2
-	Person grandFather2 = new Person("grand-father-2", "Mothers", "Grand Father 2");
-	grandFather.setChild(new Person("Uncle", "OR", "AUNT"));
-	grandFather.setChild(new Person("Uncle", "OR", "AUNT"));
+	Person grandFather2 = new Person("grand-father-2", "Mothers", "Grand Father 2", Gender.MALE);
+	grandFather.setChild(new Person("Uncle", "OR", "AUNT", Gender.FEMALE), familyMembers);
+	grandFather.setChild(new Person("Uncle", "OR", "AUNT", Gender.FEMALE), familyMembers);
 		//add another child
 	//create mother
-	Person mother = new Person("My Mother", "Mother", "My Mother");
-	mother.setFather(grandFather2);
-	mother.setMother(grandMother2);
-	mother.setChild(new Person("Mothers", "First", "Mother's Child"));
+	Person mother = new Person("My Mother", "Mother", "My Mother", Gender.FEMALE);
+	mother.setFather(grandFather2, familyMembers);
+	mother.setMother(grandMother2, familyMembers);
+	mother.setChild(new Person("Mothers", "First", "Mother's Child", Gender.MALE), familyMembers);
 		//add another child
 	//create father
-	Person father = new Person("Father", "Father", "Father");
+	Person father = new Person("Father", "Father", "Father", Gender.MALE);
+	father.setFather(grandFather, familyMembers);
+	father.setMother(grandMother, familyMembers);
+	//create brother
+	father.setChild(new Person("Fathers", "First", "Father's Child", Gender.MALE), familyMembers);
+	father.setChild(new Person("Fathers", "Second", "Father's Child", Gender.FEMALE), familyMembers);
+	//create child
+	me.setMother(mother, familyMembers);
+	me.setFather(father, familyMembers);
+	
+	Person wife = new Person("Wife", "", "Wife", Gender.FEMALE);
+	Person baby = new Person("MY Baby", "", "Baby", Gender.MALE);
+	baby.setMother(wife, familyMembers);
+	baby.setFather(me, familyMembers);
+	//wife.setChild(baby);
+	//me.setChild(baby);
+	
+	personRepository.save(me);
+	
+**/
+	
+	Person me = new Person();
+	Person uncle  = new Person("Uncle", "Uncle", "Uncle", Gender.MALE);
+
+	//create grandfather1
+	Person grandFather = new Person("grand-father-1", "Dads", "Grand Father 1", Gender.MALE);
+	grandFather.setChild(new Person("Uncle", "OR", "Aunt", Gender.FEMALE));
+	grandFather.setChild(uncle);
+	//create grandmother1
+	Person grandMother = new Person("grand-mother-1", "Dads", "Grand Mother 1", Gender.FEMALE);
+	grandMother.setChild(uncle);
+	//create grandmother2
+	Person grandMother2 = new Person("grand-mother-2", "Mothers", "Grand Mother 2", Gender.FEMALE);
+	//create grandfather2
+	Person grandFather2 = new Person("grand-father-2", "Mothers", "Grand Father 2", Gender.MALE);
+	grandFather.setChild(new Person("Uncle", "OR", "AUNT", Gender.FEMALE));
+	grandFather.setChild(new Person("Uncle", "OR", "AUNT", Gender.FEMALE));
+		//add another child
+	//create mother
+	Person mother = new Person("My Mother", "Mother", "My Mother", Gender.FEMALE);
+	mother.setFather(grandFather2);
+	mother.setMother(grandMother2);
+	mother.setChild(new Person("Mothers", "First", "Mother's Child", Gender.MALE));
+		//add another child
+	//create father
+	Person father = new Person("Father", "Father", "Father", Gender.MALE);
 	father.setFather(grandFather);
 	father.setMother(grandMother);
 	//create brother
-	father.setChild(new Person("Fathers", "First", "Father's Child"));
-	father.setChild(new Person("Fathers", "Second", "Father's Child"));
+	father.setChild(new Person("Fathers", "First", "Father's Child", Gender.MALE));
+	father.setChild(new Person("Fathers", "Second", "Father's Child", Gender.FEMALE));
 	//create child
 	me.setMother(mother);
 	me.setFather(father);
 	
-	Person wife = new Person("Wife", "", "Wife");
-	Person baby = new Person("MY Baby", "", "Baby");
+	Person wife = new Person("Wife", "", "Wife", Gender.FEMALE);
+	Person baby = new Person("MY Baby", "", "Baby", Gender.MALE);
 	baby.setMother(wife);
 	baby.setFather(me);
-	wife.setChild(baby);
-	me.setChild(baby);
+	//wife.setChild(baby);
+	//me.setChild(baby);
 	
 	personRepository.save(me);
+	
 }
   
   
