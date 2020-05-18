@@ -29,7 +29,7 @@ public class FamilyTree implements Comparable<FamilyTree>{
 		this.root = null;
 		this.size = 0;
 	}
-	FamilyTree(Person me){
+	public FamilyTree(Person me){
 		root = me;
 		size++;
 		data = this.toString();

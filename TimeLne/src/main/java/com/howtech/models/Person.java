@@ -35,9 +35,9 @@ public class Person implements Comparable<Person>{
 	
 	
 	//Mother and Father person objects everyone has at least theses two
-	@Relationship(type = "MOTHER", direction = Relationship.OUTGOING)
+	@Relationship(type = "MOTHER", direction = Relationship.INCOMING)
 	private Person mother;
-	@Relationship(type = "FATHER", direction = Relationship.OUTGOING)
+	@Relationship(type = "FATHER", direction = Relationship.INCOMING)
 	private Person father;
 	
 	//list of children
@@ -64,6 +64,14 @@ public class Person implements Comparable<Person>{
 	
 	private String email;
 	
+	public Person(String firstName, String middleName, String lastName) {
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		mother = null;
+		father = null;
+		children = new HashSet<>();
+	}
 	public Person() {
 		mother = null;
 		father = null;

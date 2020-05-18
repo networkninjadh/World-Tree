@@ -1,5 +1,6 @@
 package com.howtech.controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,12 @@ public class PersonController {
 		personRepository.save(person);
 		return person;
 	}
+	@GetMapping("/people")
+	Iterable<Person> getFamilyTree() {
+		return personRepository.findAll();
+	}
 	
-	@GetMapping("/person")
+	@GetMapping("/person/{id}")
 	Optional<Person> getPerson(@RequestParam(value = "id") Long id) {
 		Optional<Person> person = null;
 		try {
