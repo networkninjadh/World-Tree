@@ -121,8 +121,10 @@ public void run(String... args) throws Exception {
 	baby.setFather(me);
 	//wife.setChild(baby);
 	//me.setChild(baby);
-	
+	FamilyTree myTree = new FamilyTree(me);
+	familyTreeRepository.save(myTree);
 	personRepository.save(me);
+	
 	
 }
   

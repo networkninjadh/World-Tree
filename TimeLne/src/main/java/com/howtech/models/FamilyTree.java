@@ -7,6 +7,8 @@ import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @NodeEntity(label = "FamilyTree")
 public class FamilyTree implements Comparable<FamilyTree>{
 	
@@ -14,18 +16,21 @@ public class FamilyTree implements Comparable<FamilyTree>{
 	@GeneratedValue 
 	private Long id;
 	
-	//mostly everything can be done with the root node
 	private Person root;
 	
 	//Used internally
+	@JsonIgnore
 	private Person head;
+	@JsonIgnore
 	private Person tail;
 	
+	@JsonIgnore
 	int size;
 	
+	@JsonIgnore
 	String data;
 	
-	FamilyTree(){
+	public FamilyTree(){
 		this.root = null;
 		this.size = 0;
 	}
@@ -44,11 +49,11 @@ public class FamilyTree implements Comparable<FamilyTree>{
 			return true;
 	}
 	public void setMother(Person mother) {
-	//	if(this.root != null) {
-	//	this.root.setMother(mother);
-	//	}else {
-	//		System.out.println("Cannot add mother to empty tree");
-	//	}
+		if(this.root != null) {
+		this.root.setMother(mother);
+		}else {
+			System.out.println("Cannot add mother to empty tree");
+		}
 	}
 	public Long getId() {
 		return id;
@@ -104,8 +109,8 @@ public class FamilyTree implements Comparable<FamilyTree>{
 		return 0;
 	} 
 	
-	@Override
-	public String toString() { //Person should only print a person this method should handle printing all elements in the tree
-		return root.toString();
-	}
+	//@Override
+	//public String toString() { //Person should only print a person this method should handle printing all elements in the tree
+		//return root.toString();
+	//}
 }

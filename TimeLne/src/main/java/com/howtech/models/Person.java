@@ -11,8 +11,13 @@ import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.howtech.security.models.User;
+
 import java.util.Set;
 import java.util.Stack;
+
+import javax.persistence.Embedded;
 
 @NodeEntity(label="FamilyMember")
 public class Person implements Comparable<Person>{
@@ -35,13 +40,18 @@ public class Person implements Comparable<Person>{
 	private Gender gender;
 	
 	
+	@Embedded
+	private User me;
 	//Mother and Father person objects everyone has at least theses two
+	//@JsonIgnore
 	@Relationship(type = "MOTHER", direction = Relationship.OUTGOING)
 	private Person mother;
+	//@JsonIgnore
 	@Relationship(type = "FATHER", direction = Relationship.OUTGOING)
 	private Person father;
 	
 	//list of children
+	@JsonIgnore
 	@Relationship(type = "CHILD", direction = Relationship.OUTGOING)
 	private Set<Person> children;
 	

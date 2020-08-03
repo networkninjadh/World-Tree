@@ -38,7 +38,7 @@ public class AuthenticationApplication implements CommandLineRunner {
 		admin.setUsername("admin");
 		admin.setPassword("admin");
 		admin.setEmail("admin@email.com");
-		admin.setRoles(new ArrayList<Role> (Arrays.asList(Role.ROLE_ADMIN)));
+		admin.setRoles(Arrays.asList(Role.ROLE_ADMIN));
 		
 		userService.signup(admin);
 		
