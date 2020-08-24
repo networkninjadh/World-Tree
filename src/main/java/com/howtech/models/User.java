@@ -10,7 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -28,9 +30,9 @@ public class User implements UserDetails {
     private String password;
 
     @Relationship(type = "ROLES", direction = Relationship.OUTGOING)
-    private List<String> roles = new ArrayList<>();
+    private Set<String> roles = new HashSet<>();
 
-    public User(String username, String password, List<String> roles) {
+    public User(String username, String password, Set<String> roles) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -85,11 +87,11 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	public void setRoles(List<String> roles) {
+	public void setRoles(Set<String> roles) {
 		this.roles = roles;
 	}
 
-	public List<String> getRoles() {
+	public Set<String> getRoles() {
 		return roles;
 	}
 }

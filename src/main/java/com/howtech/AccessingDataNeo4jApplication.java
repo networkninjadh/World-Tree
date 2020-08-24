@@ -12,6 +12,7 @@ import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.google.common.collect.Sets;
 import com.howtech.models.FamilyTree;
 import com.howtech.models.Gender;
 import com.howtech.models.Person;
@@ -132,7 +133,7 @@ public void run(String... args) throws Exception {
 	FamilyTree myTree = new FamilyTree(me);
 	familyTreeRepository.save(myTree);
 	
-	User userMe = new User("networkninjadh", passwordEncoder.encode("Papayaland.123"), Arrays.asList(ApplicationUserRole.USER.name()));
+	User userMe = new User("networkninjadh", passwordEncoder.encode("Papayaland.123"), Sets.newHashSet(ApplicationUserRole.USER.name()));
 	me.setMe(userMe);
 	personRepository.save(me);
 	
