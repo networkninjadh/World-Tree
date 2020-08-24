@@ -63,7 +63,7 @@ public void run(String... args) throws Exception {
 	
 	
 	
-	Stack<Person> familyMembers = new Stack<Person>();
+	//Stack<Person> familyMembers = new Stack<Person>();
 	/**
 	Person me = new Person();
 	Person uncle  = new Person("Uncle", "Uncle", "Uncle", Gender.MALE);
@@ -110,55 +110,56 @@ public void run(String... args) throws Exception {
 	
 **/
 	/**
+	 
 	 * TODO: figure out how to run the app on the server
 	 */
-	
-	Person me = new Person();
-	Person uncle  = new Person("Uncle", "Uncle", "Uncle", Gender.MALE);
-
-	//create grandfather1
-	Person grandFather = new Person("grand-father-1", "Dads", "Grand Father 1", Gender.MALE);
-	grandFather.setChild(new Person("Uncle", "OR", "Aunt", Gender.FEMALE));
-	grandFather.setChild(uncle);
-	//create grandmother1
-	Person grandMother = new Person("grand-mother-1", "Dads", "Grand Mother 1", Gender.FEMALE);
-	grandMother.setChild(uncle);
-	//create grandmother2
-	Person grandMother2 = new Person("grand-mother-2", "Mothers", "Grand Mother 2", Gender.FEMALE);
-	//create grandfather2
-	Person grandFather2 = new Person("grand-father-2", "Mothers", "Grand Father 2", Gender.MALE);
-	grandFather.setChild(new Person("Uncle", "OR", "AUNT", Gender.FEMALE));
-	grandFather.setChild(new Person("Uncle", "OR", "AUNT", Gender.FEMALE));
-		//add another child
-	//create mother
-	Person mother = new Person("My Mother", "Mother", "My Mother", Gender.FEMALE);
-	mother.setFather(grandFather2);
-	mother.setMother(grandMother2);
-	mother.setChild(new Person("Mothers", "First", "Mother's Child", Gender.MALE));
-		//add another child
-	//create father
-	Person father = new Person("Father", "Father", "Father", Gender.MALE);
-	father.setFather(grandFather);
-	father.setMother(grandMother);
-	//create brother
-	father.setChild(new Person("Fathers", "First", "Father's Child", Gender.MALE));
-	father.setChild(new Person("Fathers", "Second", "Father's Child", Gender.FEMALE));
-	//create child
-	me.setMother(mother);
-	me.setFather(father);
-	
-	Person wife = new Person("Wife", "", "Wife", Gender.FEMALE);
-	Person baby = new Person("MY Baby", "", "Baby", Gender.MALE);
-	baby.setMother(wife);
-	baby.setFather(me);
-	//wife.setChild(baby);
-	//me.setChild(baby);
-	FamilyTree myTree = new FamilyTree(me);
-	familyTreeRepository.save(myTree);
-	
-	User userMe = new User("networkninjadh", passwordEncoder.encode("Papayaland.123"), Sets.newHashSet(ApplicationUserRole.USER.name()));
-	me.setMe(userMe);
-	personRepository.save(me);
+//	
+//	Person me = new Person();
+//	Person uncle  = new Person("Uncle", "Uncle", "Uncle", Gender.MALE);
+//
+//	//create grandfather1
+//	Person grandFather = new Person("grand-father-1", "Dads", "Grand Father 1", Gender.MALE);
+//	grandFather.setChild(new Person("Uncle", "OR", "Aunt", Gender.FEMALE));
+//	grandFather.setChild(uncle);
+//	//create grandmother1
+//	Person grandMother = new Person("grand-mother-1", "Dads", "Grand Mother 1", Gender.FEMALE);
+//	grandMother.setChild(uncle);
+//	//create grandmother2
+//	Person grandMother2 = new Person("grand-mother-2", "Mothers", "Grand Mother 2", Gender.FEMALE);
+//	//create grandfather2
+//	Person grandFather2 = new Person("grand-father-2", "Mothers", "Grand Father 2", Gender.MALE);
+//	grandFather.setChild(new Person("Uncle", "OR", "AUNT", Gender.FEMALE));
+//	grandFather.setChild(new Person("Uncle", "OR", "AUNT", Gender.FEMALE));
+//		//add another child
+//	//create mother
+//	Person mother = new Person("My Mother", "Mother", "My Mother", Gender.FEMALE);
+//	mother.setFather(grandFather2);
+//	mother.setMother(grandMother2);
+//	mother.setChild(new Person("Mothers", "First", "Mother's Child", Gender.MALE));
+//		//add another child
+//	//create father
+//	Person father = new Person("Father", "Father", "Father", Gender.MALE);
+//	father.setFather(grandFather);
+//	father.setMother(grandMother);
+//	//create brother
+//	father.setChild(new Person("Fathers", "First", "Father's Child", Gender.MALE));
+//	father.setChild(new Person("Fathers", "Second", "Father's Child", Gender.FEMALE));
+//	//create child
+//	me.setMother(mother);
+//	me.setFather(father);
+//	
+//	Person wife = new Person("Wife", "", "Wife", Gender.FEMALE);
+//	Person baby = new Person("MY Baby", "", "Baby", Gender.MALE);
+//	baby.setMother(wife);
+//	baby.setFather(me);
+//	//wife.setChild(baby);
+//	//me.setChild(baby);
+//	FamilyTree myTree = new FamilyTree(me);
+//	familyTreeRepository.save(myTree);
+//	
+//	User userMe = new User("networkninjadh", passwordEncoder.encode("Papayaland.123"), Sets.newHashSet(ApplicationUserRole.USER.name()));
+//	me.setMe(userMe);
+//	personRepository.save(me);
 	
 	
 }
