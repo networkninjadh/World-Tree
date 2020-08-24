@@ -111,7 +111,7 @@ public void run(String... args) throws Exception {
 **/
 	/**
 	 
-	 * TODO: figure out how to run the app on the server
+	 * TODO: figure out how to run the app on the server with command line runner
 	 */
 //	
 //	Person me = new Person();
