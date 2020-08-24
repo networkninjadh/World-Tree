@@ -1,5 +1,6 @@
-   package com.howtech;
+package com.howtech;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +9,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.howtech.models.FamilyTree;
 import com.howtech.models.Gender;
 import com.howtech.models.Person;
+import com.howtech.models.User;
 import com.howtech.repositories.FamilyTreeRepository;
 import com.howtech.repositories.PersonRepository;
+import com.howtech.security.ApplicationUserRole;
 
 @EntityScan(basePackages = "com.howtech.models")
 @EnableTransactionManagement
@@ -22,6 +26,9 @@ import com.howtech.repositories.PersonRepository;
 @SpringBootApplication 
 public class AccessingDataNeo4jApplication implements CommandLineRunner{
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Autowired
 	private PersonRepository personRepository;
 	
@@ -81,6 +88,7 @@ public void run(String... args) throws Exception {
 	
 **/
 	
+	
 	Person me = new Person();
 	Person uncle  = new Person("Uncle", "Uncle", "Uncle", Gender.MALE);
 
@@ -123,6 +131,9 @@ public void run(String... args) throws Exception {
 	//me.setChild(baby);
 	FamilyTree myTree = new FamilyTree(me);
 	familyTreeRepository.save(myTree);
+	
+	User userMe = new User("networkninjadh", passwordEncoder.encode("Papayaland.123"), Arrays.asList(ApplicationUserRole.USER.name()));
+	me.setMe(userMe);
 	personRepository.save(me);
 	
 	

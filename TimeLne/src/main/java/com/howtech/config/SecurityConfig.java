@@ -104,7 +104,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
-	
+	/**
 	@Override
 	@Bean
 	protected UserDetailsService userDetailsService() {
@@ -135,4 +135,5 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 				customerUser
 				);
 	}
+	**/
 }

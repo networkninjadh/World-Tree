@@ -13,10 +13,7 @@ import com.google.common.collect.Sets;
  *
  */
 public enum ApplicationUserRole {
-	EMPLOYEE(Sets.newHashSet()), //needs to be able to fill orders access inventory
-	OWNER(Sets.newHashSet(ApplicationUserPermission.STORE_READ,ApplicationUserPermission.STORE_WRITE, ApplicationUserPermission.CUSTOMER_READ)), //can do everything with store and view customers
-	CUSTOMER(Sets.newHashSet(ApplicationUserPermission.CUSTOMER_READ)),
-	LAST_MIN_HAIR(Sets.newHashSet(ApplicationUserPermission.CUSTOMER_READ)); //needs to be able to update and view their customer info and see available stores
+	USER(Sets.newHashSet()); //needs to be able to fill orders access inventory
 	
 	private final Set<ApplicationUserPermission> permissions;
 	

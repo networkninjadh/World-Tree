@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: bolt://hobby-jkiogepljjohgbkeaplfjkfl.dbs.graphenedb.com:24787
+    username: app179892059-dPXxpO
+    password: b.GuT4GL4sT9Mt.2Ga22bTr6vHejlwi

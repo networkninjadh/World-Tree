@@ -86,6 +86,60 @@ public class Person implements Comparable<Person>{
 		this.id = id;
 	}
 	
+	
+	
+	public boolean isInitialized() {
+		return initialized;
+	}
+
+	public void setInitialized(boolean initialized) {
+		this.initialized = initialized;
+	}
+
+	public Date getDeathdate() {
+		return deathdate;
+	}
+
+	public void setDeathdate(Date deathdate) {
+		this.deathdate = deathdate;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public User getMe() {
+		return me;
+	}
+
+	public void setMe(User me) {
+		this.me = me;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public void setChildren(Set<Person> children) {
+		this.children = children;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
