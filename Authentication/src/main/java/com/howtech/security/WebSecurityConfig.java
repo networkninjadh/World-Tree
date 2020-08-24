@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -33,40 +33,25 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 	    // Entry points
-	    http.authorizeRequests()//
-	        .antMatchers("/users/signin").permitAll()//
-	        .antMatchers("/users/signup").permitAll()//
+	    http.authorizeRequests()
+	        .antMatchers("/users/signin").permitAll()
+	        .antMatchers("/users/signup").permitAll()
 	        .antMatchers("/h2-console/**/**").permitAll()
-	        // Disallow everything else..
-	        .anyRequest().authenticated();
+	        .antMatchers("/v2/api-docs").permitAll()
+	        .antMatchers("/configuration").permitAll()
+	        .antMatchers("/swagger-resources/*").permitAll()
+	        .antMatchers("/swagger-ui.html").permitAll()
+	        .antMatchers("/webjars/**").permitAll();
 
-	    // If a user try to access a resource without having enough permissions
 	    http.exceptionHandling().accessDeniedPage("/login");
 
 	    // Apply JWT
 	    http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
 
-	    // Optional, if you want to test the API from a browser
-	    // http.httpBasic();
-
-	    super.configure(http);
+	   // super.configure(http);
 		
 	}
 	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		//Allow Swagger to be accessed without authentication
-		web.ignoring().antMatchers("/v2/api-docs")
-		.antMatchers("/swagger-resources/**")
-		.antMatchers("/swagger-ui.html")
-		.antMatchers("/configuration/**")
-		.antMatchers("/webjars/**")
-		.antMatchers("/public")
-		
-		// Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production
-		.and().ignoring()
-		.antMatchers("/h2-console/**/**");;
-	}
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {

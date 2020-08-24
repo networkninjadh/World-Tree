@@ -12,35 +12,26 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.howtech.security.models.User;
 
 import java.util.Set;
 import java.util.Stack;
 
-import javax.persistence.Embedded;
-
 @NodeEntity(label="FamilyMember")
 public class Person implements Comparable<Person>{
-	//Id in the database
 	@Id
 	@GeneratedValue
 	private Long id;
 	private boolean active;
-	
 	private boolean initialized = false;
-	//Name information
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	
-	//Birth and death dates
 	private Date birthdate;
 	private Date deathdate = null;
 	private int age;
 	private Gender gender;
 	
-	
-	@Embedded
+	@Relationship(type = "USER_ACCOUNT", direction = Relationship.OUTGOING)
 	private User me;
 	//Mother and Father person objects everyone has at least theses two
 	//@JsonIgnore
@@ -50,36 +41,26 @@ public class Person implements Comparable<Person>{
 	@Relationship(type = "FATHER", direction = Relationship.OUTGOING)
 	private Person father;
 	
-	//list of children
 	@JsonIgnore
 	@Relationship(type = "CHILD", direction = Relationship.OUTGOING)
 	private Set<Person> children;
-	
-	//Address information
-	
+		
 	private String country;
-	
 	private String state;
-	
 	private String city;
-	
 	private String street;
-	
 	private int streetNumber;
-	
 	private int aptNumber;
-	
-	//contact info
-	
 	private String phoneNumber;
-	
 	private String email;
+	
 	public Person(String lastName) {
 		this.lastName = lastName;
 		mother = null;
 		father = null;
 		children = new HashSet<>();
 	}
+	
 	public Person(String firstName, String middleName, String lastName, Gender gender) {
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -89,12 +70,14 @@ public class Person implements Comparable<Person>{
 		father = null;
 		children = new HashSet<>();
 	}
+	
 	public Person() {
 		mother = null;
 		father = null;
 		
 		children = new HashSet<>();
 	}
+	
 	public Long getId() {
 		return this.id;
 	}
@@ -177,6 +160,7 @@ public class Person implements Comparable<Person>{
 		cal.set(year, day, month);
 		birthdate = cal.getTime();
 	}
+	
 	public Date getBirthdate() {
 		return birthdate;
 	}
@@ -190,18 +174,23 @@ public class Person implements Comparable<Person>{
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
+	
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
 	}
+	
 	public String getMiddleName() {
 		return middleName;
 	}
+	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	
 	public String getLastName() {
 		return lastName;
 	}
@@ -217,6 +206,7 @@ public class Person implements Comparable<Person>{
 	public void setStreetNumber(int streetNumber) {
 		this.streetNumber = streetNumber;
 	}
+	
 	public int getStreetNumber() {
 		return streetNumber;
 	}
@@ -224,6 +214,7 @@ public class Person implements Comparable<Person>{
 	public void setStreet(String street) {
 		this.street = street;
 	}
+	
 	public String getStreet() {
 		return street;
 	}
@@ -231,13 +222,15 @@ public class Person implements Comparable<Person>{
 	public void setAptNumber(int aptNumber) {
 		this.aptNumber = aptNumber;
 	}
+	
 	public int getAptNumber() {
 		return aptNumber;
 	}
-	// aptNumber city state country
+	
 	public void setCity(String city) {
 		this.city = city;
 	}
+	
 	public String getCity() {
 		return city;
 	}
@@ -245,6 +238,7 @@ public class Person implements Comparable<Person>{
 	public void setState(String state) {
 		this.state = state;
 	}
+	
 	public String getState() {
 		return state;
 	}
@@ -260,12 +254,15 @@ public class Person implements Comparable<Person>{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -275,7 +272,6 @@ public class Person implements Comparable<Person>{
 		return ("Phone : " + phoneNumber + "\n"
 				+ "Email : " + email);
 	}
-	
 	
 	private String getChildrenInfo() {
 		String retString = "";

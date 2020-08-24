@@ -1,8 +1,9 @@
-package com.howtech.security.models;
+package com.howtech.models;
 
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,12 +12,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
-
 import static java.util.stream.Collectors.toList;
 
-@NodeEntity(label="User")
+@NodeEntity(label="UserAccount")
 public class User implements UserDetails {
     /**
 	 * 
@@ -26,13 +24,10 @@ public class User implements UserDetails {
 	@Id
     @GeneratedValue
     Long id;
-	
     private String username;
-
     private String password;
-    
-    @ElementCollection(fetch = FetchType.EAGER)
-    //@Builder.Default
+
+    @Relationship(type = "ROLES", direction = Relationship.OUTGOING)
     private List<String> roles = new ArrayList<>();
 
     public User(String username, String password, List<String> roles) {
@@ -45,6 +40,7 @@ public class User implements UserDetails {
 	public User() {
 		super();
 	}
+
 	
 	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

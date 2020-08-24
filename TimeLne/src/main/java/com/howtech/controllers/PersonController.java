@@ -26,7 +26,7 @@ public class PersonController {
 	private FamilyTreeRepository familyTreeRepository;
 	
 	@PostMapping ("/addPerson")
-	Person newPerson(@RequestBody Person person) {
+	public Person newPerson(@RequestBody Person person) {
 		Person myPerson = new Person();
 		myPerson.setFirstName(person.getFirstName());
 		myPerson.setMiddleName(person.getMiddleName());
@@ -34,6 +34,7 @@ public class PersonController {
 		personRepository.save(person);
 		return person;
 	}
+	
 	@CrossOrigin(maxAge = 3600)
 	@GetMapping("/people")
 	Iterable<Person> getFamilyTree() {
@@ -42,7 +43,7 @@ public class PersonController {
 	
 	@CrossOrigin
 	@GetMapping("/person/{id}")
-	Optional<Person> getPerson(@RequestParam(value = "id") Long id) {
+	public Optional<Person> getPerson(@RequestParam(value = "id") Long id) {
 		Optional<Person> person = null;
 		try {
 			person =  personRepository.findById(id);
@@ -58,6 +59,4 @@ public class PersonController {
 	Iterable<FamilyTree> getTree(){
 		return familyTreeRepository.findAll();
 	}
-	
-	
 }
