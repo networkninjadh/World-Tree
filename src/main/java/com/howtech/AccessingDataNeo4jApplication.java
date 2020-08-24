@@ -3,6 +3,11 @@ package com.howtech;
 import java.util.Arrays;
 import java.util.Stack;
 
+import org.neo4j.driver.AuthTokens;
+import org.neo4j.driver.Config;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.GraphDatabase;
+import org.neo4j.driver.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,6 +32,8 @@ import com.howtech.security.ApplicationUserRole;
 @SpringBootApplication 
 public class AccessingDataNeo4jApplication implements CommandLineRunner{
 
+	
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -42,6 +49,20 @@ public class AccessingDataNeo4jApplication implements CommandLineRunner{
 
 @Override
 public void run(String... args) throws Exception {
+	
+		String graphenedbURL = System.getenv("GRAPHENEDB_BOLT_URL");
+	    String graphenedbUser = System.getenv("GRAPHENEDB_BOLT_USER");
+	    String graphenedbPass = System.getenv("GRAPHENEDB_BOLT_PASSWORD");
+
+	    Config.ConfigBuilder builder = Config.builder().withEncryption();
+	    Config config = builder.build();
+
+	    Driver driver = GraphDatabase.driver( graphenedbURL, AuthTokens.basic( graphenedbUser, graphenedbPass ), config );
+
+	    Session session = driver.session();
+	
+	
+	
 	Stack<Person> familyMembers = new Stack<Person>();
 	/**
 	Person me = new Person();
@@ -88,7 +109,9 @@ public void run(String... args) throws Exception {
 	personRepository.save(me);
 	
 **/
-	
+	/**
+	 * TODO: figure out how to run the app on the server
+	 */
 	
 	Person me = new Person();
 	Person uncle  = new Person("Uncle", "Uncle", "Uncle", Gender.MALE);
